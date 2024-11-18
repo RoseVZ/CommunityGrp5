@@ -16,19 +16,26 @@ def phaseIpreferences(player, community, global_random):
     #     list_choices.append([1, partner_id])
     # list_choices.append([0, min(partner_id + 1, num_members - 1)])
     # return list_choices
+    print("----------PHASE 1 BEGINS----------")
     community_size = len(community.members)
     task_size = len(community.tasks)
-    ability_size = len(community.tasks[0].abilities)
+    ability_size = len(community.tasks[0])
+
+    print(f"We have {community_size} community members.")
+    print(f"We have {task_size} tasks to accomplish.")
+    print(f"There are in total {ability_size} abilities.")
+
     list_choices = []
-    print("I AM HERE")
+
     for i in range(task_size):
         min_energy = np.inf
         best_partner_id = -1 
         print(f"THIS IS TASK {i}")
         for j in range(community_size):
-            if community.members[i].id == player.id:
+            if community.members[j].id == player.id:
+                print(f"FOUND MYSELF, I AM PLAYER {player.id}")
                 continue
-            energy_expended = sum([max(community.tasks[i][l] - max(community.members[j].abilities[l], player.abilities[l]), 0) for l in range(ability_size)])
+            energy_expended = sum([max(community.tasks[i][l] - max(community.members[j].abilities[l], player.abilities[l]), 0) for l in range( ability_size)])
             if energy_expended < min_energy:
                 min_energy = energy_expended
                 best_partner_id = j
@@ -37,9 +44,6 @@ def phaseIpreferences(player, community, global_random):
 
     return list_choices
             
-
-        
-
     # num_values = len(V)
     
     # cost_matrix = np.zeros((size, size))
@@ -55,10 +59,6 @@ def phaseIpreferences(player, community, global_random):
             
 
     # Solving the assignment problem
-    
-
-    
-
 
 def phaseIIpreferences(player, community, global_random):
     '''Return a list of tasks for the particular player to do individually'''
